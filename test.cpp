@@ -2,8 +2,8 @@
 
 int main(void)
 {
-    double Double = 3.14;
-    std::cout << Double << std::endl;
+    int i = 0;
+    int *p = &i;
 
     return 0;
 }
