@@ -2,8 +2,7 @@
 
 int main(void)
 {
-    int i = 0;
-    int *p = &i;
+    int null = 0, *p = null;
 
     return 0;
 }
