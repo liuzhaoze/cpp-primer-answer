@@ -33,3 +33,6 @@
 
 # vscode
 .vscode
+
+# test file
+test.cpp
