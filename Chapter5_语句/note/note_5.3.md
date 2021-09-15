@@ -12,6 +12,22 @@ case 标签必须是整型常量表达式。
 
 即使不准备在 default 标签下做任何工作，也应该定义一个 default 标签。如果 switch 结构以一个空的 default 标签作为结束，则该 default 标签后面必须跟上一条空语句或一个空块。
 
+如果需要为某个 case 分支定义并初始化一个变量，应该把变量定义在块内，从而确保后面的所有 case 标签都在变量的作用域之外。
+```c
+switch (isFile) {
+    case true:
+        {
+            string file_name = get_file_name();
+            // ...
+        }
+        break;
+    case false:
+        // ...
+    default:
+        // ...
+}
+```
+
 ### 练习
 * [练习 5.5](../src/quiz_5.5.cpp)
 * [练习 5.6](../src/quiz_5.6.cpp)
