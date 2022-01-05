@@ -1,11 +1,11 @@
-## 2.4 const 限定符
+# 2.4 const 限定符
 
 > 本章术语：
+>  
 > * 顶层 const （top-level const）
 > * 底层 const （low-level const）
 > * 常量表达式（const expression）：值不会改变，并且在编译过程就能得到计算结果的表达式。
 > * 字面值类型（literal type）：算数类型、引用和指针。
-
 
 用 `const` 修饰的对象必须初始化。
 
@@ -15,7 +15,8 @@
 **如果想在多个文件之间共享 const 对象，必须在变量的定义之前天界 extern 关键字。**  
 为了实现只在一个文件中定义 const ，而在其他多个文件中声明并使用它，需要对 const 变量不管是声明还是定义都添加 extern 关键字。
 
-### 2.4.1 const 的引用（常量引用）
+## 2.4.1 const 的引用（常量引用）
+
 ```c
 const int ci = 1024;
 const int &r1 = ci;  // r1 是 ci 的引用
@@ -23,34 +24,42 @@ const int &r1 = ci;  // r1 是 ci 的引用
 
 在初始化常量引用时，允许使用任意表达式作为初始值。
 即：常量引用可以绑定非常量的对象、字面值或表达式。
+
 ```c
 double dval = 3.14;
 const int &ri = dval;  // 合法
 ```
+
 编译器的行为是：
+
 1. 由双精度浮点数生成一个临时的整型常量 `const int temp = dval;`
 2. 让 ri 绑定这个临时量 `const int &ri = temp;`
 
 常量引用仅对**引用可参与的操作**做出了限定，如果引用的对象本身不是常量，那么允许通过其他途径改变它的值：
+
 ```c
 int i = 42;
 int &r1 = i;
 const int &r2 = i;
 ```
+
 上述代码中，不允许通过 r2 修改 i 的值，允许通过 r1 或直接给 i 赋值来修改 i 的值。
 
-### 2.4.2 指针和 const
+## 2.4.2 指针和 const
+
 指向常量的指针不能用于改变其所指对象的值。
 
 只能用指向常量的指针存放常量对象的地址。
 
 允许令一个指向常量的指针指向一个非常量的对象：
+
 ```c
 double dval = 3.14;
 const double *cptr = &dval;  // 不能通过 cptr 改变 dval 的值
 ```
 
 常量指针必须初始化，并且指针中的地址不能改变。使用 `*const` 声明常量指针。
+
 ```c
 int errNumb = 0;
 int *const curErr = &errNumb;  // curErr 将一直指向 errNumb
@@ -59,7 +68,8 @@ int *const curErr = &errNumb;  // curErr 将一直指向 errNumb
 **指向常量的指针**可以修改，指向其他对象；
 **常量指针**无法修改其指向的对象。
 
-### 2.4.3 顶层 const
+## 2.4.3 顶层 const
+
 **顶层 const**：表示指针本身是个常量。  
 **底层 const**：表示指针所指的对象是个常量。
 
@@ -67,7 +77,8 @@ int *const curErr = &errNumb;  // curErr 将一直指向 errNumb
 
 所有用于声明引用的 const 都是底层 const
 
-### 2.4.4 constexpr 和常量表达式
+## 2.4.4 constexpr 和常量表达式
+
 `const int sz = get_size();` 尽管 sz 本身是一个常量，但它的具体值直到运行时才能获取到，所以 sz 不是常量表达式。
 
 声明为 constexpr 的变量一定是一个常量，而且必须用常量表达式初始化。  
@@ -82,7 +93,8 @@ constexpr 引用能绑定到这样的变量上，constexpr 指针也能指向这
 
 在 constexpr 声明中如果定义了一个指针，则该指针是常量指针，其指向的对象不一定是常量。
 
-### 练习
+## 练习
+
 * [练习 2.26](../src/quiz_2.26.md)
 * [练习 2.27](../src/quiz_2.27.md)
 * [练习 2.28](../src/quiz_2.28.md)
