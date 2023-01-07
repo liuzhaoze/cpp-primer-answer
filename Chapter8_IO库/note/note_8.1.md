@@ -16,7 +16,7 @@ IO 库类型：
 
 * `strm::iostate`：下面四个标志都是 iostate 类型
 * `strm::badbit`：流已崩溃时为 true（不可恢复性错误）
-* `strm:failbit`：一个 IO 操作失败时为 true（可恢复性错误）
+* `strm::failbit`：一个 IO 操作失败时为 true（可恢复性错误）
 * `strm::eofbit`：到达文件结束时为 true
 * `strm::goodbit`：用来指出流未处于错误状态。此值保证为 0 。
 
