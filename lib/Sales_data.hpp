@@ -1,5 +1,5 @@
-#ifndef _SALES_DATA_H_
-#define _SALES_DATA_H_
+#ifndef _SALES_DATA_HPP_
+#define _SALES_DATA_HPP_
 
 #include <iostream>
 #include <string>
