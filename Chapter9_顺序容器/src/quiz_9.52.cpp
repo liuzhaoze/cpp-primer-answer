@@ -137,8 +137,11 @@ int main(int argc, char **argv)
     }
 
     // 处理缓存中的数据
-    num_stk.push(num_cache);
-    num_cache.clear();
+    if (!num_cache.empty())
+    {
+        num_stk.push(num_cache);
+        num_cache.clear();
+    }
 
     // 清空运算符栈元素
     while (!op_stk.empty())
