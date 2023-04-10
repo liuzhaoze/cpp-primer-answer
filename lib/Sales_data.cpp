@@ -49,6 +49,16 @@ std::istream &read(std::istream &istrm, Sales_data &item)
     return istrm;
 }
 
+std::istream &operator>>(std::istream &istrm, Sales_data &item)
+{
+    double price = 0;
+
+    istrm >> item.book_No >> item.units_sold >> price;
+    item.revenue = price * item.units_sold;
+
+    return istrm;
+}
+
 /**
  * @brief 输出销售记录的ISBN、销售数量、收入、平均价格
  *
@@ -57,6 +67,13 @@ std::istream &read(std::istream &istrm, Sales_data &item)
  * @return std::ostream&
  */
 std::ostream &print(std::ostream &ostrm, const Sales_data &item)
+{
+    ostrm << item.isbn() << " " << item.units_sold << " " << item.revenue << " " << item.avg_price();
+
+    return ostrm;
+}
+
+std::ostream &operator<<(std::ostream &ostrm, const Sales_data &item)
 {
     ostrm << item.isbn() << " " << item.units_sold << " " << item.revenue << " " << item.avg_price();
 
@@ -79,7 +96,16 @@ Sales_data add(const Sales_data &lhs, const Sales_data &rhs)
     return sum;
 }
 
-inline bool compare_isbn(const Sales_data &lhs, const Sales_data &rhs)
+Sales_data operator+(const Sales_data &lhs, const Sales_data &rhs)
+{
+    Sales_data sum = lhs;
+
+    sum.combine(rhs);
+
+    return sum;
+}
+
+bool compare_isbn(const Sales_data &lhs, const Sales_data &rhs)
 {
     return lhs.isbn() < rhs.isbn();
 }

@@ -2,13 +2,17 @@
 #define _SALES_DATA_HPP_
 
 #include <iostream>
+#include <istream>
+#include <ostream>
 #include <string>
 
 class Sales_data
 {
     friend Sales_data add(const Sales_data &, const Sales_data &);
     friend std::ostream &print(std::ostream &, const Sales_data &);
+    friend std::ostream &operator<<(std::ostream &, const Sales_data &);
     friend std::istream &read(std::istream &, Sales_data &);
+    friend std::istream &operator>>(std::istream &, Sales_data &);
 
   private:
     std::string book_No;
@@ -37,9 +41,12 @@ class Sales_data
 };
 
 Sales_data add(const Sales_data &, const Sales_data &);
+Sales_data operator+(const Sales_data &, const Sales_data &);
 std::ostream &print(std::ostream &, const Sales_data &);
+std::ostream &operator<<(std::ostream &, const Sales_data &);
 std::istream &read(std::istream &, Sales_data &);
+std::istream &operator>>(std::istream &, Sales_data &);
 
-inline bool compare_isbn(const Sales_data &lhs, const Sales_data &rhs);
+bool compare_isbn(const Sales_data &lhs, const Sales_data &rhs);
 
 #endif
