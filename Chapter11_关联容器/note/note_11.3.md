@@ -51,6 +51,67 @@ set 的迭代器是指向关键字的，关键字不能修改，所以 set 的�
 
 ## 11.3.4 map 的下标操作
 
+map 和 unordered_map 的下标操作：
+
+* `c[k]` ：返回关键字为 k 的元素；如果 k 不在 c 中，添加一个关键字为 k 的元素，对其进行值初始化
+* `c.at(k)` ：访问关键字为 k 的元素，带参数检查；若 k 不在 c 中，则抛出一个 out_of_range 异常（见 [9.3.2 节](../../Chapter9_%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/note/note_9.3.md)）
+
+不能对一个 multimap 或一个 unordered_multimap 进行下标操作，因为这些容器中可能有多个值与一个关键字相联。
+
+只能对非 const 的 map 使用下标操作。
+
+当对一个 map 进行下标操作时，会获得一个 mapped_type 对象；  
+当解引用一个 map 迭代器时，会得到一个 value_type 对象。
+
+map 的下标运算符返回一个左值，可读可写。
+
+*当只想检查一个元素是否在 map 中时，应当用 at/find 方法。使用下标运算符会自动添加元素。*
+
+## 11.3.5 访问元素
+
+在一个关联容器中查找元素的操作：
+
+* `c.find(k)` ：返回一个迭代器，指向第一个关键字为 k 的元素，若 k 不在容器中，则返回尾后迭代器
+* `c.count(k)` ：返回关键字等于 k 的元素的数量，对不允许重复关键字的容器，返回值永远是 0 或 1
+* `c.lower_bound(k)` ：返回一个迭代器，指向第一个关键字**不小于** k 的元素
+* `c.upper_bound(k)` ：返回一个迭代器，指向第一个关键字**大于** k 的元素
+* `c.equal_range(k)` ：返回一个迭代器 pair ，表示关键字等于 k 的元素的范围，若 k 不存在，pair 的两个成员均等于 c.end()
+
+*注意：lower_bound 和 upper_bound 不适用于无序容器。如果给定关键字 k 不存在，两者都会返回一个指向不影响排序的关键字插入位置（即：不影响容器中元素顺序的插入位置），且两个迭代器相等。*  
+*注意：下标和 at 操作只适用于非 const 的 map 和 unordered_map 。*
+
+使用示例：
+
+```cpp
+// 检查关键字是否存在
+if (word_count.find("foobar") == word_count.end())
+    cout << "foobar is not in the map" << endl;
+
+// 在允许重复关键字的容器中查找关键字
+string search_item("Alain de Botton");
+// 方法一：通过计数查找
+auto entries = authors.count(search_item); // 关键字数量
+auto iter = authors.find(search_item); // 关键字的第一个位置
+while (entries) {
+    cout << iter->second << endl;
+    ++iter;
+    --entries;
+}
+// 方法二：通过迭代器查找
+for (auto beg = authors.lower_bound(search_item),
+          end = authors.upper_bound(search_item);
+     beg != end; ++beg)
+    cout << beg->second << endl;
+// 方法二的另一种形式
+for (auto range = authors.equal_range(search_item);
+     range.first != range.second; ++range.first)
+    cout << range.first->second << endl;
+```
+
+## 11.3.6 一个单词转换的 map
+
+见[练习 11.33](../src/quiz_11.33.cpp) 。
+
 ## 练习
 
 * [练习 11.15](../src/quiz_11.15.md)
@@ -62,3 +123,16 @@ set 的迭代器是指向关键字的，关键字不能修改，所以 set 的�
 * [练习 11.21](../src/quiz_11.21.md)
 * [练习 11.22](../src/quiz_11.22.md)
 * [练习 11.23](../src/quiz_11.23.cpp)
+* [练习 11.24](../src/quiz_11.24.md)
+* [练习 11.25](../src/quiz_11.25.md)
+* [练习 11.26](../src/quiz_11.26.cpp)
+* [练习 11.27](../src/quiz_11.27.md)
+* [练习 11.28](../src/quiz_11.28.cpp)
+* [练习 11.29](../src/quiz_11.29.md)
+* [练习 11.30](../src/quiz_11.30.md)
+* [练习 11.31](../src/quiz_11.31.cpp)
+* [练习 11.32](../src/quiz_11.32.cpp)
+* [练习 11.33](../src/quiz_11.33.cpp)
+* [练习 11.34](../src/quiz_11.34.md)
+* [练习 11.35](../src/quiz_11.35.md)
+* [练习 11.36](../src/quiz_11.36.md)
