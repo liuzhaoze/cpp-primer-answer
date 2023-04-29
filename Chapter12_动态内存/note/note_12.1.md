@@ -183,6 +183,74 @@ if (!p.unique()) // 如果引用计数不是 1 ，说明有其他代码正在使
 * 如果使用了 get() 返回的指针，记住当最后一个对应的智能指针销毁后，你的指针就变为无效了
 * 如果你使用智能指针管理的资源不是 new 分配的内存，记住传递给它一个删除器（见[练习 12.14](../src/quiz_12.14.cpp) 中的 end_connection ）
 
+## 12.1.5 unique_ptr
+
+unique_ptr 独有的操作：
+
+* `unique_ptr<T> u1;` ：指向类型 T 的空 unique_ptr ，使用 delete 释放指针
+* `unique_ptr<T, D> u2;` ：指向类型 T 的空 unique_ptr ，使用类型为 D 的可调用对象释放指针
+* `unique_ptr<T, D> u(d);` ：指向类型 T 的空 unique_ptr ，使用类型 D 的对象 d 代替 delete
+* `unique_ptr<objT, delT> p(new objT, fcn);` ：p 指向一个类型为 objT 的对象，并使用一个类型为 delT 的对象 fcn 释放 objT 对象
+* `u = nullptr` ：释放 u 指向的对象，将 u 置为空
+* `u.release()` ：u 放弃对指针的控制权，返回指针的值，并将 u 置为空
+* `u.reset()` ：释放 u 指向的对象，将 u 置为空
+* `u.reset(p)` ：释放 u 当前指向的对象，令 u 指向 p
+* `u.reset(nullptr)` ：释放 u 指向的对象，将 u 置为空
+
+与 shared_ptr 的不同之处：
+
+* 某个时刻只能有一个 unique_ptr 指向一个给定的对象
+* unique_ptr 没有类似 make_shared 的标准库函数返回一个 unique_ptr
+* 定义 unique_ptr 需要将其绑定到一个 new 返回的指针上
+* unique_ptr 不支持普通的拷贝和赋值
+* unique_ptr 需要通过调用 release 或 reset 将指针的所有权从一个非 const 的 unique_ptr 转移给另一个 unique_ptr
+
+示例：
+
+```cpp
+unique_ptr<string> p1(new string("Stegosaurus"));
+unique_ptr<string> p2(p1); // 错误：不支持拷贝
+unique_ptr<string> p3; p3 = p1; // 错误：不支持赋值
+
+unique_ptr<string> p2(p1.release()); // 正确：p1 放弃对 string 的控制权，将控制权转移给 p2 ，并将 p1 置为空
+
+unique_ptr<string> p3(new string("Trex"));
+p2.reset(p3); // 释放 p2 所指对象，将 p3 对 string 的控制权转移给 p2 ，并将 p3 置为空
+```
+
+如果不用智能指针，而是用内置指针保存 release 返回的指针，则需要显式释放资源：
+
+```cpp
+p2.release(); // 错误：p2 所指对象的指针丢失，对应内存未得到释放，内存泄漏
+
+auto p = p2.release();
+delete p; // 正确
+```
+
+*不能拷贝 unique_ptr 的例外：可以拷贝或赋值一个将要被销毁的 unique_ptr ，如：从函数返回一个 unique_ptr 。*
+
+## 12.1.6 weak_ptr
+
+weak_ptr 不控制所指对象的生存期，它指向由一个 shared_ptr 管理的对象。  
+将一个 weak_ptr 绑定到一个 shared_ptr 不会改变 shared_ptr 的引用计数。  
+weak_ptr 所指对象是否释放只取决于对应的 shared_ptr 的引用计数。
+
+* `weak_ptr<T> w;` ：指向类型为 T 的空 weak_ptr
+* `weak_ptr<T> w(sp);` ：指向 shared_ptr sp 所指对象的 weak_ptr ，T 必须能转换为 sp 所指向的类型
+* `w = p` ：p 可以是一个 shared_ptr 或一个 weak_ptr ，赋值后 w 与 p 共享对象
+* `w.reset()` ：将 w 置为空
+* `w.use_count()` ：与 w 共享对象的 shared_ptr 的数量
+* `w.expired()` ：若 w.use_count() 为 0 ，返回 true ，否则返回 false
+* `w.lock()` ：如果 expired 为 true ，返回一个空 shared_ptr ；否则返回一个指向 w 所指对象的 shared_ptr
+
+不能直接通过 weak_ptr 访问对象，必须通过 lock ：
+
+```cpp
+if (shared_ptr<int> np = wp.lock()) { // wp 所指对象存在时条件成立
+    // 在 if 作用域中 np 与 wp 共享对象
+}
+```
+
 ## 练习
 
 * [练习 12.1](../src/quiz_12.1.md)
@@ -200,3 +268,10 @@ if (!p.unique()) // 如果引用计数不是 1 ，说明有其他代码正在使
 * [练习 12.13](../src/quiz_12.13.cpp)
 * [练习 12.14](../src/quiz_12.14.cpp)
 * [练习 12.15](../src/quiz_12.15.cpp)
+* [练习 12.16](../src/quiz_12.16.cpp)
+* [练习 12.17](../src/quiz_12.17.cpp)
+* [练习 12.18](../src/quiz_12.18.md)
+* [练习 12.19](../../lib/StrBlob.hpp)
+* [练习 12.20](../src/quiz_12.20.cpp)
+* [练习 12.21](../src/quiz_12.21.md)
+* [练习 12.22](../src/quiz_12.22.cpp)
