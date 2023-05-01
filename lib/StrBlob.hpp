@@ -101,4 +101,47 @@ class StrBlobPtr
     bool operator!=(const StrBlobPtr &p);
 };
 
+class ConstStrBlobPtr
+{
+  private:
+    std::weak_ptr<std::vector<std::string>> wptr;
+    std::size_t curr;
+    std::shared_ptr<std::vector<std::string>> check(std::size_t i, const std::string &msg) const
+    {
+        auto ret = wptr.lock();
+        if (!ret)
+        {
+            throw std::runtime_error("unbound StrBlobPtr");
+        }
+
+        if (i >= ret->size())
+        {
+            throw std::out_of_range(msg);
+        }
+
+        return ret;
+    }
+
+  public:
+    ConstStrBlobPtr() : curr(0)
+    {
+    }
+    ConstStrBlobPtr(const StrBlob &a, std::size_t sz = 0) : wptr(a.data), curr(sz)
+    {
+    } // 形参要加 const
+
+    const std::string &deref() const // 返回值类型要加 const
+    {
+        auto p = check(curr, "dereference past end");
+        return (*p)[curr];
+    }
+
+    ConstStrBlobPtr &incr()
+    {
+        check(curr, "increment past end of ConstStrBlobPtr");
+        ++curr;
+        return *this;
+    }
+};
+
 #endif
