@@ -35,6 +35,9 @@ class StrBlob
     StrBlob(std::initializer_list<std::string> il) : data(std::make_shared<std::vector<std::string>>(il))
     {
     }
+    StrBlob(const StrBlob &sb) : data(std::make_shared<std::vector<std::string>>(*(sb.data)))
+    {
+    }
 
     size_type size() const
     {
@@ -78,6 +81,8 @@ class StrBlob
 
     StrBlobPtr begin();
     StrBlobPtr end();
+
+    StrBlob &operator=(const StrBlob &);
 };
 
 class StrBlobPtr

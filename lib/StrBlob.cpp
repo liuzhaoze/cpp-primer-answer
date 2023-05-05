@@ -1,6 +1,8 @@
 #include "StrBlob.hpp"
+#include <memory>
 #include <stdexcept>
 #include <string>
+#include <vector>
 
 /**
  * @brief 检查索引 i 是否超出 vector 的范围
@@ -74,4 +76,16 @@ StrBlobPtr StrBlob::begin()
 StrBlobPtr StrBlob::end()
 {
     return StrBlobPtr(*this, data->size());
+}
+
+/**
+ * @brief 拷贝赋值运算符
+ *
+ * @param rhs
+ * @return StrBlob&
+ */
+StrBlob &StrBlob::operator=(const StrBlob &rhs)
+{
+    data = std::make_shared<std::vector<std::string>>(*(rhs.data));
+    return *this;
 }
