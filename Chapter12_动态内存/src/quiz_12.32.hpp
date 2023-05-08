@@ -1,7 +1,3 @@
-/**
- * 重写 TextQuery 和 QueryResult 类，用 StrBlob 代替 vector<string> 保存输入文件。
- */
-
 #ifndef _QUIZ_12_32_HPP_
 #define _QUIZ_12_32_HPP_
 
