@@ -18,6 +18,11 @@ StrVec::StrVec(const StrVec &s)
     range_initialize(s.begin(), s.end());
 }
 
+StrVec::StrVec(StrVec &&s) noexcept : elements(s.elements), first_free(s.first_free), cap(s.cap)
+{
+    s.elements = s.first_free = s.cap = nullptr;
+}
+
 StrVec::StrVec(std::initializer_list<std::string> il)
 {
     range_initialize(il.begin(), il.end());
@@ -54,6 +59,21 @@ StrVec &StrVec::operator=(const StrVec &rhs)
     free();
     elements = data.first;
     first_free = cap = data.second;
+
+    return *this;
+}
+
+StrVec &StrVec::operator=(StrVec &&rhs) noexcept
+{
+    if (this != &rhs)
+    {
+        free();
+        elements = rhs.elements;
+        first_free = rhs.first_free;
+        cap = rhs.cap;
+
+        rhs.elements = rhs.first_free = rhs.cap = nullptr;
+    }
 
     return *this;
 }

@@ -27,6 +27,9 @@ class Message
     // 将本 Message 从 folders 中的所有 Folder 中移除
     void remove_from_Folders();
 
+    // 使用给定 Message 的 folders 成员更新本 Message 的成员，并将给定 Message 的 folders 设置为析构安全的状态
+    void move_Folders(Message *);
+
   public:
     // 默认构造函数
     explicit Message(const std::string &str = "") : contents(str)
@@ -38,6 +41,10 @@ class Message
     ~Message();
     // 拷贝赋值运算符
     Message &operator=(const Message &);
+    // 移动构造函数
+    Message(Message &&);
+    // 移动赋值运算符
+    Message &operator=(Message &&);
 
     // 从给定 Folder 中添加本 Message
     void save(Folder &);

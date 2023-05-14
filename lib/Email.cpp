@@ -1,5 +1,6 @@
 #include "Email.hpp"
 #include <map>
+#include <utility>
 
 void Message::addFldr(Folder *f)
 {
@@ -39,9 +40,27 @@ void Message::remove_from_Folders()
     }
 }
 
+void Message::move_Folders(Message *m)
+{
+    folders = std::move(m->folders); // 将给定 Massage 的 folders 成员的内存交给本 Message 接管
+
+    for (auto f : folders)
+    {
+        f->remMsg(m);    // 删除旧 Message
+        f->addMsg(this); // 添加本 Message（新）
+    }
+
+    m->folders.clear(); // 设置为析构安全的状态
+}
+
 Message::Message(const Message &m) : contents(m.contents), folders(m.folders)
 {
     add_to_Folders(m); // 将本 Message 添加到 m 所在的所有 Folder 中
+}
+
+Message::Message(Message &&m) : contents(std::move(m.contents)) // 移动 contents
+{
+    move_Folders(&m); // 移动 folders
 }
 
 Message::~Message()
@@ -55,6 +74,18 @@ Message &Message::operator=(const Message &rhs)
     contents = rhs.contents;
     folders = rhs.folders;
     add_to_Folders(rhs);
+
+    return *this;
+}
+
+Message &Message::operator=(Message &&rhs)
+{
+    if (this != &rhs)
+    {
+        remove_from_Folders();              // 将本 Message 从所有 Folder 中删除
+        contents = std::move(rhs.contents); // 移动 contents
+        move_Folders(&rhs);                 // 移动 folders
+    }
 
     return *this;
 }

@@ -36,6 +36,10 @@ class StrVec
     ~StrVec();
     // 拷贝赋值运算符
     StrVec &operator=(const StrVec &);
+    // 移动构造函数
+    StrVec(StrVec &&) noexcept;
+    // 移动赋值运算符
+    StrVec &operator=(StrVec &&) noexcept;
 
     size_type size() const;
     size_type capacity() const;
