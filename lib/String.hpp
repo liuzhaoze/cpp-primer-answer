@@ -3,12 +3,14 @@
 
 #include <cstddef>
 #include <memory>
+#include <ostream>
 #include <utility>
 
 class String
 {
   public:
     using size_type = std::size_t;
+    friend std::ostream &operator<<(std::ostream &, const String &);
 
   private:
     char *elements;
@@ -40,5 +42,7 @@ class String
     size_type size() const;
     size_type length() const;
 };
+
+std::ostream &operator<<(std::ostream &, const String &);
 
 #endif

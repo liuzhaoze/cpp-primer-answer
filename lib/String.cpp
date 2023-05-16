@@ -93,3 +93,9 @@ String::size_type String::length() const
 {
     return end - elements - 1;
 }
+
+std::ostream &operator<<(std::ostream &os, const String &s)
+{
+    os << s.c_str();
+    return os;
+}

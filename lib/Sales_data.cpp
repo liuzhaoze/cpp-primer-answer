@@ -52,7 +52,15 @@ std::istream &read(std::istream &istrm, Sales_data &item)
     double price = 0;
 
     istrm >> item.book_No >> item.units_sold >> price;
-    item.revenue = price * item.units_sold;
+
+    if (istrm)
+    {
+        item.revenue = price * item.units_sold;
+    }
+    else
+    {
+        item = Sales_data();
+    }
 
     return istrm;
 }
@@ -62,7 +70,15 @@ std::istream &operator>>(std::istream &istrm, Sales_data &item)
     double price = 0;
 
     istrm >> item.book_No >> item.units_sold >> price;
-    item.revenue = price * item.units_sold;
+
+    if (istrm)
+    {
+        item.revenue = price * item.units_sold;
+    }
+    else
+    {
+        item = Sales_data();
+    }
 
     return istrm;
 }
