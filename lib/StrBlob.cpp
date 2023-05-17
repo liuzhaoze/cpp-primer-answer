@@ -1,4 +1,5 @@
 #include "StrBlob.hpp"
+#include <algorithm>
 #include <memory>
 #include <stdexcept>
 #include <string>
@@ -53,11 +54,6 @@ StrBlobPtr &StrBlobPtr::incr()
     return *this;
 }
 
-bool StrBlobPtr::operator!=(const StrBlobPtr &p)
-{
-    return p.curr != curr;
-}
-
 /**
  * @brief 返回指向 StrBlob 的首元素的指针
  *
@@ -88,4 +84,64 @@ StrBlob &StrBlob::operator=(const StrBlob &rhs)
 {
     data = std::make_shared<std::vector<std::string>>(*(rhs.data));
     return *this;
+}
+
+bool operator==(const StrBlob &lhs, const StrBlob &rhs)
+{
+    return *lhs.data == *rhs.data;
+}
+
+bool operator!=(const StrBlob &lhs, const StrBlob &rhs)
+{
+    return !(lhs == rhs);
+}
+
+bool operator<(const StrBlob &lhs, const StrBlob &rhs)
+{
+    return std::lexicographical_compare(lhs.data->begin(), lhs.data->end(), rhs.data->begin(), rhs.data->end());
+}
+
+bool operator>(const StrBlob &lhs, const StrBlob &rhs)
+{
+    return rhs < lhs;
+}
+
+bool operator<=(const StrBlob &lhs, const StrBlob &rhs)
+{
+    return !(rhs < lhs);
+}
+
+bool operator>=(const StrBlob &lhs, const StrBlob &rhs)
+{
+    return !(lhs < rhs);
+}
+
+bool operator==(const StrBlobPtr &lhs, const StrBlobPtr &rhs)
+{
+    return lhs.curr == rhs.curr;
+}
+
+bool operator!=(const StrBlobPtr &lhs, const StrBlobPtr &rhs)
+{
+    return !(lhs == rhs);
+}
+
+bool operator<(const StrBlobPtr &x, const StrBlobPtr &y)
+{
+    return x.curr < y.curr;
+}
+
+bool operator>(const StrBlobPtr &x, const StrBlobPtr &y)
+{
+    return x.curr > y.curr;
+}
+
+bool operator<=(const StrBlobPtr &x, const StrBlobPtr &y)
+{
+    return x.curr <= y.curr;
+}
+
+bool operator>=(const StrBlobPtr &x, const StrBlobPtr &y)
+{
+    return x.curr >= y.curr;
 }

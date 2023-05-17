@@ -12,6 +12,13 @@ class StrVec
   public:
     using size_type = std::size_t;
 
+    friend bool operator==(const StrVec &, const StrVec &);
+    friend bool operator!=(const StrVec &, const StrVec &);
+    friend bool operator<(const StrVec &, const StrVec &);
+    friend bool operator>(const StrVec &, const StrVec &);
+    friend bool operator<=(const StrVec &, const StrVec &);
+    friend bool operator>=(const StrVec &, const StrVec &);
+
   private:
     std::allocator<std::string> alloc; // 内存分配器
     std::string *elements;             // 指向数组首元素的指针
@@ -47,5 +54,12 @@ class StrVec
     std::string *end() const;
     void push_back(const std::string &);
 };
+
+bool operator==(const StrVec &, const StrVec &);
+bool operator!=(const StrVec &, const StrVec &);
+bool operator<(const StrVec &, const StrVec &);
+bool operator>(const StrVec &, const StrVec &);
+bool operator<=(const StrVec &, const StrVec &);
+bool operator>=(const StrVec &, const StrVec &);
 
 #endif

@@ -17,6 +17,13 @@ class StrBlob
     friend class StrBlobPtr; // 声明友元类，使其能访问 data 私有成员
     friend class ConstStrBlobPtr;
 
+    friend bool operator==(const StrBlob &, const StrBlob &);
+    friend bool operator!=(const StrBlob &, const StrBlob &);
+    friend bool operator<(const StrBlob &, const StrBlob &);
+    friend bool operator>(const StrBlob &, const StrBlob &);
+    friend bool operator<=(const StrBlob &, const StrBlob &);
+    friend bool operator>=(const StrBlob &, const StrBlob &);
+
   private:
     std::shared_ptr<std::vector<std::string>> data; // 多个 StrBlob 对象共享一个 vector
 
@@ -89,8 +96,23 @@ class StrBlob
     StrBlob &operator=(const StrBlob &);
 };
 
+bool operator==(const StrBlob &, const StrBlob &);
+bool operator!=(const StrBlob &, const StrBlob &);
+bool operator<(const StrBlob &, const StrBlob &);
+bool operator>(const StrBlob &, const StrBlob &);
+bool operator<=(const StrBlob &, const StrBlob &);
+bool operator>=(const StrBlob &, const StrBlob &);
+
 class StrBlobPtr
 {
+  public:
+    friend bool operator==(const StrBlobPtr &, const StrBlobPtr &);
+    friend bool operator!=(const StrBlobPtr &, const StrBlobPtr &);
+    friend bool operator<(const StrBlobPtr &, const StrBlobPtr &);
+    friend bool operator>(const StrBlobPtr &, const StrBlobPtr &);
+    friend bool operator<=(const StrBlobPtr &, const StrBlobPtr &);
+    friend bool operator>=(const StrBlobPtr &, const StrBlobPtr &);
+
   private:
     std::weak_ptr<std::vector<std::string>> wptr;
     std::size_t curr; // 数组当前的位置
@@ -107,8 +129,14 @@ class StrBlobPtr
 
     std::string &deref() const; // 解引用
     StrBlobPtr &incr();         // 前缀递增
-    bool operator!=(const StrBlobPtr &p);
 };
+
+bool operator==(const StrBlobPtr &, const StrBlobPtr &);
+bool operator!=(const StrBlobPtr &, const StrBlobPtr &);
+bool operator<(const StrBlobPtr &, const StrBlobPtr &);
+bool operator>(const StrBlobPtr &, const StrBlobPtr &);
+bool operator<=(const StrBlobPtr &, const StrBlobPtr &);
+bool operator>=(const StrBlobPtr &, const StrBlobPtr &);
 
 class ConstStrBlobPtr
 {

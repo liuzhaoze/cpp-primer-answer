@@ -11,6 +11,8 @@ class Sales_data
   public:
     friend Sales_data add(const Sales_data &, const Sales_data &);
     friend Sales_data operator+(const Sales_data &, const Sales_data &);
+    friend Sales_data operator-(const Sales_data &, const Sales_data &);
+
     friend std::ostream &print(std::ostream &, const Sales_data &);
     friend std::ostream &operator<<(std::ostream &, const Sales_data &);
     friend std::istream &read(std::istream &, Sales_data &);
@@ -38,13 +40,17 @@ class Sales_data
     {
         return book_No;
     }
+    double avg_price() const;
+
     Sales_data &combine(const Sales_data &);
     Sales_data &operator+=(const Sales_data &);
-    double avg_price() const;
+    Sales_data &operator-=(const Sales_data &);
 };
 
 Sales_data add(const Sales_data &, const Sales_data &);
 Sales_data operator+(const Sales_data &, const Sales_data &);
+Sales_data operator-(const Sales_data &, const Sales_data &);
+
 std::ostream &print(std::ostream &, const Sales_data &);
 std::ostream &operator<<(std::ostream &, const Sales_data &);
 std::istream &read(std::istream &, Sales_data &);

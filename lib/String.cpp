@@ -94,8 +94,48 @@ String::size_type String::length() const
     return end - elements - 1;
 }
 
+char *String::begin_ptr() const
+{
+    return elements;
+}
+
+char *String::end_ptr() const
+{
+    return end;
+}
+
 std::ostream &operator<<(std::ostream &os, const String &s)
 {
     os << s.c_str();
     return os;
+}
+
+bool operator==(const String &lhs, const String &rhs)
+{
+    return (lhs.size() == rhs.size() && std::equal(lhs.begin_ptr(), lhs.end_ptr(), rhs.begin_ptr()));
+}
+
+bool operator!=(const String &lhs, const String &rhs)
+{
+    return !(lhs == rhs);
+}
+
+bool operator<(const String &lhs, const String &rhs)
+{
+    return std::lexicographical_compare(lhs.begin_ptr(), lhs.end_ptr(), rhs.begin_ptr(), rhs.end_ptr());
+}
+
+bool operator>(const String &lhs, const String &rhs)
+{
+    return rhs < lhs;
+}
+
+bool operator<=(const String &lhs, const String &rhs)
+{
+    return !(rhs < lhs);
+}
+
+bool operator>=(const String &lhs, const String &rhs)
+{
+    return !(lhs < rhs);
 }

@@ -24,6 +24,20 @@ Sales_data &Sales_data::operator+=(const Sales_data &rhs)
 }
 
 /**
+ * @brief 将销售记录从本销售记录中减去
+ *
+ * @param rhs
+ * @return Sales_data&
+ */
+Sales_data &Sales_data::operator-=(const Sales_data &rhs)
+{
+    units_sold -= rhs.units_sold;
+    revenue -= rhs.revenue;
+
+    return *this;
+}
+
+/**
  * @brief 返回平均售价
  *
  * @return double
@@ -123,10 +137,22 @@ Sales_data add(const Sales_data &lhs, const Sales_data &rhs)
 Sales_data operator+(const Sales_data &lhs, const Sales_data &rhs)
 {
     Sales_data sum = lhs;
-
-    sum.combine(rhs);
-
+    sum += rhs;
     return sum;
+}
+
+/**
+ * @brief 将两个销售记录相减，并返回相减结果
+ *
+ * @param lhs
+ * @param rhs
+ * @return Sales_data
+ */
+Sales_data operator-(const Sales_data &lhs, const Sales_data &rhs)
+{
+    Sales_data sub = lhs;
+    sub -= rhs;
+    return sub;
 }
 
 bool compare_isbn(const Sales_data &lhs, const Sales_data &rhs)

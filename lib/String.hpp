@@ -12,6 +12,13 @@ class String
     using size_type = std::size_t;
     friend std::ostream &operator<<(std::ostream &, const String &);
 
+    friend bool operator==(const String &, const String &);
+    friend bool operator!=(const String &, const String &);
+    friend bool operator<(const String &, const String &);
+    friend bool operator>(const String &, const String &);
+    friend bool operator<=(const String &, const String &);
+    friend bool operator>=(const String &, const String &);
+
   private:
     char *elements;
     char *end;
@@ -41,8 +48,17 @@ class String
     const char *c_str() const;
     size_type size() const;
     size_type length() const;
+    char *begin_ptr() const;
+    char *end_ptr() const;
 };
 
 std::ostream &operator<<(std::ostream &, const String &);
+
+bool operator==(const String &, const String &);
+bool operator!=(const String &, const String &);
+bool operator<(const String &, const String &);
+bool operator>(const String &, const String &);
+bool operator<=(const String &, const String &);
+bool operator>=(const String &, const String &);
 
 #endif
