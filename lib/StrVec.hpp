@@ -48,6 +48,8 @@ class StrVec
     // 移动赋值运算符
     StrVec &operator=(StrVec &&) noexcept;
 
+    StrVec &operator=(std::initializer_list<std::string>);
+
     size_type size() const;
     size_type capacity() const;
     std::string *begin() const;

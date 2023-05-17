@@ -45,6 +45,8 @@ class Sales_data
     Sales_data &combine(const Sales_data &);
     Sales_data &operator+=(const Sales_data &);
     Sales_data &operator-=(const Sales_data &);
+
+    Sales_data &operator=(const std::string &);
 };
 
 Sales_data add(const Sales_data &, const Sales_data &);

@@ -1,5 +1,6 @@
 #include "Sales_data.hpp"
 #include <ostream>
+#include <string>
 
 /**
  * @brief 将销售记录加入本销售记录中
@@ -153,6 +154,19 @@ Sales_data operator-(const Sales_data &lhs, const Sales_data &rhs)
     Sales_data sub = lhs;
     sub -= rhs;
     return sub;
+}
+
+/**
+ * @brief 将给定 ISBN 赋给对象
+ *
+ * @param rhs 指定 ISBN 字符串
+ * @return Sales_data&
+ */
+Sales_data &Sales_data::operator=(const std::string &rhs)
+{
+    *this = Sales_data(rhs);
+
+    return *this;
 }
 
 bool compare_isbn(const Sales_data &lhs, const Sales_data &rhs)
