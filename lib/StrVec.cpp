@@ -181,3 +181,13 @@ bool operator>=(const StrVec &lhs, const StrVec &rhs)
 {
     return !(lhs < rhs);
 }
+
+std::string &StrVec::operator[](size_type n)
+{
+    return elements[n];
+}
+
+const std::string &StrVec::operator[](size_type n) const
+{
+    return elements[n];
+}

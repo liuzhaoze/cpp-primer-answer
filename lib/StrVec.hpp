@@ -47,7 +47,6 @@ class StrVec
     StrVec(StrVec &&) noexcept;
     // 移动赋值运算符
     StrVec &operator=(StrVec &&) noexcept;
-
     StrVec &operator=(std::initializer_list<std::string>);
 
     size_type size() const;
@@ -55,6 +54,9 @@ class StrVec
     std::string *begin() const;
     std::string *end() const;
     void push_back(const std::string &);
+
+    std::string &operator[](size_type);
+    const std::string &operator[](size_type) const;
 };
 
 bool operator==(const StrVec &, const StrVec &);

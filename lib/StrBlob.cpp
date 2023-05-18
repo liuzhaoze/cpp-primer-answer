@@ -86,6 +86,18 @@ StrBlob &StrBlob::operator=(const StrBlob &rhs)
     return *this;
 }
 
+std::string &StrBlob::operator[](size_type n)
+{
+    check(n, "out of range");
+    return data->at(n);
+}
+
+const std::string &StrBlob::operator[](size_type n) const
+{
+    check(n, "out of range");
+    return data->at(n);
+}
+
 bool operator==(const StrBlob &lhs, const StrBlob &rhs)
 {
     return *lhs.data == *rhs.data;
@@ -114,6 +126,18 @@ bool operator<=(const StrBlob &lhs, const StrBlob &rhs)
 bool operator>=(const StrBlob &lhs, const StrBlob &rhs)
 {
     return !(lhs < rhs);
+}
+
+std::string &StrBlobPtr::operator[](StrBlob::size_type n)
+{
+    auto p = check(n, "dereference out of range.");
+    return (*p)[n];
+}
+
+const std::string &StrBlobPtr::operator[](StrBlob::size_type n) const
+{
+    auto p = check(n, "dereference out of range.");
+    return (*p)[n];
 }
 
 bool operator==(const StrBlobPtr &lhs, const StrBlobPtr &rhs)

@@ -50,6 +50,9 @@ class String
     size_type length() const;
     char *begin_ptr() const;
     char *end_ptr() const;
+
+    char &operator[](size_type);
+    const char &operator[](size_type) const;
 };
 
 std::ostream &operator<<(std::ostream &, const String &);

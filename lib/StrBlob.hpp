@@ -94,6 +94,8 @@ class StrBlob
     StrBlobPtr end();
 
     StrBlob &operator=(const StrBlob &);
+    std::string &operator[](size_type);
+    const std::string &operator[](size_type) const;
 };
 
 bool operator==(const StrBlob &, const StrBlob &);
@@ -129,6 +131,8 @@ class StrBlobPtr
 
     std::string &deref() const; // 解引用
     StrBlobPtr &incr();         // 前缀递增
+    std::string &operator[](StrBlob::size_type);
+    const std::string &operator[](StrBlob::size_type) const;
 };
 
 bool operator==(const StrBlobPtr &, const StrBlobPtr &);

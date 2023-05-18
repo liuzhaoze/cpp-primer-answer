@@ -139,3 +139,13 @@ bool operator>=(const String &lhs, const String &rhs)
 {
     return !(lhs < rhs);
 }
+
+char &String::operator[](size_type n)
+{
+    return elements[n];
+}
+
+const char &String::operator[](size_type n) const
+{
+    return elements[n];
+}
