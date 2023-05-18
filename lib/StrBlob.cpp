@@ -169,3 +169,59 @@ bool operator>=(const StrBlobPtr &x, const StrBlobPtr &y)
 {
     return x.curr >= y.curr;
 }
+
+StrBlobPtr &StrBlobPtr::operator++()
+{
+    check(curr, "increment past end of StrBlobPtr"); // 如果 curr 已经指向尾后位置，则不能递增
+    ++curr;
+    return *this;
+}
+
+StrBlobPtr &StrBlobPtr::operator--()
+{
+    --curr;                                            // 如果 curr 是 0 ，递减后得到的是最大的正整数
+    check(curr, "decrement past begin of StrBlobPtr"); // 不能递减 0
+    return *this;
+}
+
+StrBlobPtr StrBlobPtr::operator++(int)
+{
+    StrBlobPtr ret = *this; // 记录递增前的值
+    ++*this;                // 调用前置递增检查有效性并完成递增
+    return ret;
+}
+
+StrBlobPtr StrBlobPtr::operator--(int)
+{
+    StrBlobPtr ret = *this; // 记录递减前的值
+    --*this;                // 调用前置递减检查有效性并完成递减
+    return ret;
+}
+
+StrBlobPtr &StrBlobPtr::operator+=(StrBlob::size_type n)
+{
+    curr += n;
+    check(curr, "increment past end of StrBlobPtr");
+    return *this;
+}
+
+StrBlobPtr &StrBlobPtr::operator-=(StrBlob::size_type n)
+{
+    curr -= n;
+    check(curr, "decrement past begin of StrBlobPtr");
+    return *this;
+}
+
+StrBlobPtr operator+(const StrBlobPtr &lhs, StrBlob::size_type n)
+{
+    StrBlobPtr ret = lhs;
+    ret += n;
+    return ret;
+}
+
+StrBlobPtr operator-(const StrBlobPtr &lhs, StrBlob::size_type n)
+{
+    StrBlobPtr ret = lhs;
+    ret -= n;
+    return ret;
+}

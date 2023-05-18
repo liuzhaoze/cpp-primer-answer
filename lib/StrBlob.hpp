@@ -133,6 +133,12 @@ class StrBlobPtr
     StrBlobPtr &incr();         // 前缀递增
     std::string &operator[](StrBlob::size_type);
     const std::string &operator[](StrBlob::size_type) const;
+    StrBlobPtr &operator++();
+    StrBlobPtr &operator--();
+    StrBlobPtr operator++(int);
+    StrBlobPtr operator--(int);
+    StrBlobPtr &operator+=(StrBlob::size_type);
+    StrBlobPtr &operator-=(StrBlob::size_type);
 };
 
 bool operator==(const StrBlobPtr &, const StrBlobPtr &);
@@ -141,6 +147,8 @@ bool operator<(const StrBlobPtr &, const StrBlobPtr &);
 bool operator>(const StrBlobPtr &, const StrBlobPtr &);
 bool operator<=(const StrBlobPtr &, const StrBlobPtr &);
 bool operator>=(const StrBlobPtr &, const StrBlobPtr &);
+StrBlobPtr operator+(const StrBlobPtr &, StrBlob::size_type);
+StrBlobPtr operator-(const StrBlobPtr &, StrBlob::size_type);
 
 class ConstStrBlobPtr
 {
