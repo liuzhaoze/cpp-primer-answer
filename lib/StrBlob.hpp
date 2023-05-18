@@ -139,6 +139,8 @@ class StrBlobPtr
     StrBlobPtr operator--(int);
     StrBlobPtr &operator+=(StrBlob::size_type);
     StrBlobPtr &operator-=(StrBlob::size_type);
+    std::string &operator*() const;
+    std::string *operator->() const;
 };
 
 bool operator==(const StrBlobPtr &, const StrBlobPtr &);
@@ -191,6 +193,9 @@ class ConstStrBlobPtr
         ++curr;
         return *this;
     }
+
+    const std::string &operator*() const;
+    const std::string *operator->() const;
 };
 
 #endif
