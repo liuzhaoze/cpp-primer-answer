@@ -1,4 +1,5 @@
 #include "strip.hpp"
+#include <cctype>
 
 /**
  * @brief 将单词转换为小写，并去除可能的标点符号
@@ -12,7 +13,7 @@ std::string strip(std::string str)
     {
         c = std::tolower(c);
     }
-    str.erase(std::remove_if(str.begin(), str.end(), std::ispunct), str.end());
+    str.erase(std::remove_if(str.begin(), str.end(), [](char &c) { return std::ispunct(c); }), str.end());
     return str;
 
     /**
