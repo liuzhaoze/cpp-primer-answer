@@ -107,6 +107,11 @@ class Date
     Size toDays() const; // not implemented yet.
     Date &operator+=(Size offset);
     Date &operator-=(Size offset);
+
+    explicit operator bool() const
+    {
+        return (year < 4000) ? true : false;
+    }
 };
 
 static const Date::Size YtoD_400 = 146097; // 365*400 + 400/4 -3 == 146097

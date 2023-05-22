@@ -47,6 +47,15 @@ class Sales_data
     Sales_data &operator-=(const Sales_data &);
 
     Sales_data &operator=(const std::string &);
+
+    explicit operator std::string() const
+    {
+        return book_No;
+    }
+    explicit operator double() const
+    {
+        return avg_price();
+    }
 };
 
 Sales_data add(const Sales_data &, const Sales_data &);
