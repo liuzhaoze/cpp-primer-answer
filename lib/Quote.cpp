@@ -20,7 +20,7 @@ void Quote::debug() const
 
 double Bulk_quote::net_price(std::size_t n) const
 {
-    if (n >= min_qty)
+    if (n >= quantity)
     {
         return n * (1 - discount) * price;
     }
@@ -33,7 +33,7 @@ double Bulk_quote::net_price(std::size_t n) const
 void Bulk_quote::debug() const
 {
     std::cout << "Class= Bulk_quote\n"
-              << "\tbookNo= " << isbn() << "\n\tprice= " << price << "\n\tmin_qty= " << min_qty
+              << "\tbookNo= " << isbn() << "\n\tprice= " << price << "\n\tmin_qty= " << quantity
               << "\n\tdiscount= " << discount << std::endl;
 }
 

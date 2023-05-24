@@ -7,7 +7,9 @@
 
 // 表示按原价销售的书籍
 class Quote;
-// 表示可以打折销售的书籍
+// 用于保存折扣值和购买量的类，派生类使用这些数据可以实现不同的价格策略
+class Disc_quote;
+// 表示超过指定购买量后，全部享受折扣的类
 class Bulk_quote;
 
 class Quote
@@ -30,16 +32,46 @@ class Quote
     virtual void debug() const;
 };
 
-class Bulk_quote : public Quote
+class Disc_quote : public Quote
 {
-  private:
-    std::size_t min_qty = 0; // 可以打折的最低购买量
-    double discount = 0.0;   // 折扣
+  protected:
+    std::size_t quantity = 0; // 购买量
+    double discount = 0.0;    // 折扣
 
   public:
+    Disc_quote() = default;
+    Disc_quote(const std::string &book, double price, std::size_t qty, double disc)
+        : Quote(book, price), quantity(qty), discount(disc)
+    {
+    }
+
+    double net_price(std::size_t) const = 0; // 纯虚函数，需要派生类各自定义含义
+    void debug() const = 0;
+};
+
+// 15.4 节抽象基类之前所使用的 Bulk_quote 定义
+// class Bulk_quote : public Quote
+// {
+//   private:
+//     std::size_t min_qty = 0; // 可以打折的最低购买量
+//     double discount = 0.0;   // 折扣
+
+//   public:
+//     Bulk_quote() = default;
+//     Bulk_quote(const std::string &book, double p, std::size_t qty, double disc)
+//         : Quote(book, p), min_qty(qty), discount(disc)
+//     {
+//     }
+
+//     double net_price(std::size_t) const override;
+//     void debug() const override;
+// };
+
+class Bulk_quote : Disc_quote
+{
+  public:
     Bulk_quote() = default;
-    Bulk_quote(const std::string &book, double p, std::size_t qty, double disc)
-        : Quote(book, p), min_qty(qty), discount(disc)
+    Bulk_quote(const std::string &book, double price, std::size_t qty, double disc) : Disc_quote(book, price, qty, disc)
     {
     }
 
