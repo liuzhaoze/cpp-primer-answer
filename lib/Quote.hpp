@@ -27,6 +27,7 @@ class Quote
 
     std::string isbn() const;
     virtual double net_price(std::size_t) const;
+    virtual void debug() const;
 };
 
 class Bulk_quote : public Quote
@@ -43,6 +44,7 @@ class Bulk_quote : public Quote
     }
 
     double net_price(std::size_t) const override;
+    void debug() const override;
 };
 
 double print_total(std::ostream &, const Quote &, std::size_t);
