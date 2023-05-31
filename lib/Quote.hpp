@@ -131,7 +131,7 @@ bool operator!=(const Disc_quote &, const Disc_quote &);
 //     void debug() const override;
 // };
 
-class Bulk_quote : Disc_quote
+class Bulk_quote : public Disc_quote
 {
   public:
     // 默认构造函数
