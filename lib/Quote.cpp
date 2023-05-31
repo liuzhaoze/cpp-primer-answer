@@ -19,6 +19,16 @@ void Quote::debug() const
               << "\tbookNo= " << bookNo << "\n\tprice= " << price << std::endl;
 }
 
+Quote *Quote::clone() const &
+{
+    return new Quote(*this);
+}
+
+Quote *Quote::clone() &&
+{
+    return new Quote(std::move(*this));
+}
+
 double Bulk_quote::net_price(std::size_t n) const
 {
     if (n >= quantity)
@@ -36,6 +46,16 @@ void Bulk_quote::debug() const
     std::cout << "Class= Bulk_quote\n"
               << "\tbookNo= " << isbn() << "\n\tprice= " << price << "\n\tmin_qty= " << quantity
               << "\n\tdiscount= " << discount << std::endl;
+}
+
+Bulk_quote *Bulk_quote::clone() const &
+{
+    return new Bulk_quote(*this);
+}
+
+Bulk_quote *Bulk_quote::clone() &&
+{
+    return new Bulk_quote(std::move(*this));
 }
 
 double print_total(std::ostream &os, const Quote &item, std::size_t n)

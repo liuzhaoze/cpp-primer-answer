@@ -59,6 +59,10 @@ class Quote
     std::string isbn() const;
     virtual double net_price(std::size_t) const;
     virtual void debug() const;
+    // 返回当前对象的一份动态分配的拷贝
+    virtual Quote *clone() const &;
+    // 将当前对象移动至动态分配的内存中
+    virtual Quote *clone() &&;
 };
 
 bool operator==(const Quote &, const Quote &);
@@ -166,6 +170,8 @@ class Bulk_quote : public Disc_quote
 
     double net_price(std::size_t) const override;
     void debug() const override;
+    Bulk_quote *clone() const & override;
+    Bulk_quote *clone() && override;
 };
 
 double print_total(std::ostream &, const Quote &, std::size_t);
