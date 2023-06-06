@@ -54,6 +54,7 @@ template <typename T> class Vec
     T *begin() const;
     T *end() const;
     void push_back(const T &);
+    template <typename... Args> void emplace_back(Args &&...);
 
     T &operator[](size_type);
     const T &operator[](size_type) const;

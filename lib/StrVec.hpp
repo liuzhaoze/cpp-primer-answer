@@ -54,6 +54,7 @@ class StrVec
     std::string *begin() const;
     std::string *end() const;
     void push_back(const std::string &);
+    template <typename... Args> void emplace_back(Args &&...);
 
     std::string &operator[](size_type);
     const std::string &operator[](size_type) const;

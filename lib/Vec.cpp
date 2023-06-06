@@ -152,6 +152,12 @@ template <typename T> void Vec<T>::push_back(const T &s)
     alloc.construct(first_free++, s); // 构造新元素
 }
 
+template <typename T> template <typename... Args> void Vec<T>::emplace_back(Args &&...args)
+{
+    chk_n_alloc();
+    alloc.construct(first_free++, std::forward<Args>(args)...);
+}
+
 template <typename T> bool operator==(const Vec<T> &lhs, const Vec<T> &rhs)
 {
     return (lhs.size() == rhs.size() && std::equal(lhs.begin(), lhs.end(), rhs.begin()));

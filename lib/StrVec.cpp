@@ -152,6 +152,12 @@ void StrVec::push_back(const std::string &s)
     alloc.construct(first_free++, s); // 构造新元素
 }
 
+template <typename... Args> void StrVec::emplace_back(Args &&...args)
+{
+    chk_n_alloc();
+    alloc.construct(first_free++, std::forward<Args>(args)...);
+}
+
 bool operator==(const StrVec &lhs, const StrVec &rhs)
 {
     return (lhs.size() == rhs.size() && std::equal(lhs.begin(), lhs.end(), rhs.begin()));
