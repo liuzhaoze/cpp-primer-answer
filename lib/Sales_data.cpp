@@ -169,7 +169,22 @@ Sales_data &Sales_data::operator=(const std::string &rhs)
     return *this;
 }
 
+bool operator==(const Sales_data &lhs, const Sales_data &rhs)
+{
+    return (lhs.book_No == rhs.book_No) && (lhs.units_sold == rhs.units_sold) && (lhs.revenue == rhs.revenue);
+}
+
+bool operator!=(const Sales_data &lhs, const Sales_data &rhs)
+{
+    return !(lhs == rhs);
+}
+
 bool compare_isbn(const Sales_data &lhs, const Sales_data &rhs)
 {
     return lhs.isbn() < rhs.isbn();
+}
+
+std::size_t std::hash<Sales_data>::operator()(const Sales_data &s) const
+{
+    return hash<string>()(s.book_No) ^ hash<unsigned>()(s.units_sold) ^ hash<double>()(s.revenue);
 }

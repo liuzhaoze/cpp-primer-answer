@@ -1,6 +1,8 @@
 #ifndef _SALES_DATA_HPP_
 #define _SALES_DATA_HPP_
 
+#include <cstddef>
+#include <functional>
 #include <iostream>
 #include <istream>
 #include <ostream>
@@ -9,6 +11,8 @@
 class Sales_data
 {
   public:
+    friend struct std::hash<Sales_data>; // 允许 hash 类对 Sales_data 私有成员进行 hash
+
     friend Sales_data add(const Sales_data &, const Sales_data &);
     friend Sales_data operator+(const Sales_data &, const Sales_data &);
     friend Sales_data operator-(const Sales_data &, const Sales_data &);
@@ -17,6 +21,9 @@ class Sales_data
     friend std::ostream &operator<<(std::ostream &, const Sales_data &);
     friend std::istream &read(std::istream &, Sales_data &);
     friend std::istream &operator>>(std::istream &, Sales_data &);
+
+    friend bool operator==(const Sales_data &, const Sales_data &);
+    friend bool operator!=(const Sales_data &, const Sales_data &);
 
   private:
     std::string book_No;
@@ -67,6 +74,19 @@ std::ostream &operator<<(std::ostream &, const Sales_data &);
 std::istream &read(std::istream &, Sales_data &);
 std::istream &operator>>(std::istream &, Sales_data &);
 
-bool compare_isbn(const Sales_data &lhs, const Sales_data &rhs);
+bool operator==(const Sales_data &, const Sales_data &);
+bool operator!=(const Sales_data &, const Sales_data &);
+bool compare_isbn(const Sales_data &, const Sales_data &);
+
+// 为 Sales_data 定义特例化的 hash 类
+namespace std
+{
+template <> struct hash<Sales_data>
+{
+    using result_type = size_t;
+    using argument_type = Sales_data; // 该类型需要定义 == 运算符
+    size_t operator()(const Sales_data &) const;
+};
+} // namespace std
 
 #endif
