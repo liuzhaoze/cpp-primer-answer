@@ -1,6 +1,9 @@
 #include "Blob.hpp"
+#include <cstdlib>
 #include <initializer_list>
+#include <iostream>
 #include <memory>
+#include <new>
 #include <stdexcept>
 #include <string>
 #include <utility>
@@ -18,8 +21,14 @@ template <typename T> Blob<T>::Blob() : data(std::make_shared<std::vector<T>>())
 {
 }
 
-template <typename T> Blob<T>::Blob(std::initializer_list<T> il) : data(std::make_shared<std::vector<T>>(il))
+template <typename T> Blob<T>::Blob(std::initializer_list<T> il)
+try : data(std::make_shared<std::vector<T>>(il))
 {
+}
+catch (const std::bad_alloc &e)
+{
+    std::cerr << e.what() << std::endl;
+    std::abort();
 }
 
 template <typename T>    // 类的类型参数

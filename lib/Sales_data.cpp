@@ -10,6 +10,11 @@
  */
 Sales_data &Sales_data::combine(const Sales_data &rhs)
 {
+    if (isbn() != rhs.isbn())
+    {
+        throw isbn_mismatch("wrong isbn", isbn(), rhs.isbn());
+    }
+
     units_sold += rhs.units_sold;
     revenue += rhs.revenue;
 
@@ -18,6 +23,11 @@ Sales_data &Sales_data::combine(const Sales_data &rhs)
 
 Sales_data &Sales_data::operator+=(const Sales_data &rhs)
 {
+    if (isbn() != rhs.isbn())
+    {
+        throw isbn_mismatch("wrong isbn", isbn(), rhs.isbn());
+    }
+
     units_sold += rhs.units_sold;
     revenue += rhs.revenue;
 
@@ -32,6 +42,11 @@ Sales_data &Sales_data::operator+=(const Sales_data &rhs)
  */
 Sales_data &Sales_data::operator-=(const Sales_data &rhs)
 {
+    if (isbn() != rhs.isbn())
+    {
+        throw isbn_mismatch("wrong isbn", isbn(), rhs.isbn());
+    }
+
     units_sold -= rhs.units_sold;
     revenue -= rhs.revenue;
 
