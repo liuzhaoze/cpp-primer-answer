@@ -6,12 +6,12 @@
 
 关联容器类型：
 
-* 按关键字有序保存元素
+* 按关键字有序保存元素（**红黑树**）
   * `map` ：关联数组，保存关键字-值对
   * `set` ：只保存关键字的容器
   * `multimap` ：关键字可重复出现的 map
   * `multiset` ：关键字可重复出现的 set
-* 无序集合
+* 无序集合（**哈希表**）
   * `unordered_map` ：用哈希函数组织的 map
   * `unordered_set` ：用哈希函数组织的 set
   * `unordered_multimap` ：用哈希组织的、关键字可重复出现的 map
